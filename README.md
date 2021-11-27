@@ -1,4 +1,5 @@
-
+### <p align="center">🙋 Photo Collection Animation 🌟</p>
+#### <p align="center">🤩 Made With React, Redux, Material UI and Pexels API 😸</p>
 
 https://user-images.githubusercontent.com/66327336/143690109-c14fb227-a3c9-427d-ab42-6a111af5444b.mp4
 
