@@ -1,7 +1,8 @@
 {
-  "name": "photo_music",
-  "version": "0.1.0",
+  "name": "photo_collection",
+  "version": "1.0.0",
   "private": true,
+  "author": "Samarpan Dasgupta",
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
@@ -10,7 +11,9 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "aos": "^2.3.4",
     "react": "^17.0.2",
+    "react-aos": "^1.0.1",
     "react-dom": "^17.0.2",
     "react-masonry-css": "^1.0.16",
     "react-redux": "^7.2.6",

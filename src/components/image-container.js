@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import Base from "./base";
 import Masonry from "react-masonry-css";
 import ImageCard from "./card-image";
 import { useDispatch, useSelector } from "react-redux";
+import { STOP_LOADING } from "../redux/actions";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ImageContainer = () => {
   const [images, setimages] = useState([]);
   const [prevQuery, setprevQuery] = useState("");
-  const [bottomLoading, setbottomLoading] = useState(false);
+  const [bottomLoading, setbottomLoading] = useState();
+  const [error, seterror] = useState();
   const [page, setpage] = useState(1);
 
   const { query, isLoading } = useSelector((state) => {
@@ -23,12 +27,8 @@ const ImageContainer = () => {
 
   const dispatch = useDispatch();
 
-  const startLoading = () => {
-    dispatch({ type: "START_LOADING" });
-  };
-
   const stopLoading = () => {
-    dispatch({ type: "STOP_LOADING" });
+    dispatch({ type: STOP_LOADING });
   };
 
   useEffect(() => {
@@ -45,26 +45,34 @@ const ImageContainer = () => {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          if (data.error) {
+            stopLoading();
+            setbottomLoading(false);
+            seterror(
+              "Image Showing Limit Exceed... Please Try After Some Time"
+            );
+            return;
+          }
+
           const imageCollection = [];
           data.photos.map((imageBox) =>
             imageCollection.push(imageBox.src.large)
           );
 
-          //// Conditional Insertion based on the page number
-          console.log("Page: ", page);
           setimages([...images, ...imageCollection]);
-          stopLoading();
-          setbottomLoading(false);
+          isLoading && stopLoading();
+          bottomLoading && setbottomLoading(false);
+          error && seterror(false);
         })
         .then(() => {});
-
-      // .catch(setimages([]));
     }
   }, [query, page]);
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   const scrollToEnd = () => {
-    // startLoading();
     console.log("at bottom");
     setbottomLoading(true);
     setpage(page + 1);
@@ -86,9 +94,12 @@ const ImageContainer = () => {
     }
   };
 
+  const defaultItemsGrid = () => (images.length > 0 ? 3 : 1);
+  const midItemsGrid = () => (images.length > 0 ? 2 : 1);
+
   const breakpointColumnsObj = {
-    default: 3,
-    1100: 2,
+    default: defaultItemsGrid(),
+    1100: midItemsGrid(),
     500: 1,
   };
 
@@ -107,25 +118,27 @@ const ImageContainer = () => {
                 <ImageCard image={image} />
               </div>
             ))) || (
-            <div style={{ color: "#fff" }}>
+            <Typography variant="h4" align="center" color="primary">
               {isLoading ? "Hang tight, Image Loading..." : "No Images Found"}
-            </div>
+            </Typography>
           )}
         </Masonry>
-        {/* {(
+
+        {bottomLoading && (
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <div
-              style={{
-                border: "1px solid #fff",
-                padding: "10px",
-                borderRadius: "5px",
-                color: "#fff"
-              }}
-            >
+            <Typography variant="h5" style={{ color: "#fff" }} mb={5}>
               Loading...
-            </div>
+            </Typography>
           </div>
-        )} */}
+        )}
+
+        {error && (
+          <div style={{ textAlign: "center", marginTop: "20px" }} mb={5}>
+            <Typography variant="h6" color="error">
+              {error}
+            </Typography>
+          </div>
+        )}
       </Container>
     </Base>
   );

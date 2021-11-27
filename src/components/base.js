@@ -65,11 +65,20 @@ const Base = ({ children }) => {
       <LoadingBar isLoading={isLoading} />
       <AppBar
         position="sticky"
-        style={{ background: "#071a2f", borderBottom: "3px solid #0e2741" }}
+        style={{
+          background: "#071a2f",
+          borderBottom: "3px solid #0e2741",
+          backdropFilter: "blur(1000px)",
+        }}
         elevation={0}
       >
         <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
-          <IconButton edge="start" color="inherit" aria-label="menu">
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={() => window.location.replace("/")}
+          >
             <Typography variant="h6" style={{ color: "#fff" }} sm={0}>
               PhotoCollection
             </Typography>
