@@ -12,8 +12,6 @@ export default function ImageCard({ image }) {
         cursor: "pointer",
       }}
       onClick={() => window.open(image, "_blank")}
-      data-aos="zoom-in"
-      data-aos-duration="2000"
     >
       <CardMedia component="img" image={image} alt="green iguana" />
     </Card>

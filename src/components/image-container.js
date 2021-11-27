@@ -32,7 +32,7 @@ const ImageContainer = () => {
   };
 
   useEffect(() => {
-    error && page>1 && seterror(false);
+    error && page > 1 && seterror(false);
 
     if (query && query !== "") {
       fetch(
@@ -115,7 +115,7 @@ const ImageContainer = () => {
         >
           {(images.length > 0 &&
             images.map((image, index) => (
-              <div key={index}>
+              <div key={index} data-aos="zoom-in" data-aos-duration="2000">
                 <ImageCard image={image} />
               </div>
             ))) || (
