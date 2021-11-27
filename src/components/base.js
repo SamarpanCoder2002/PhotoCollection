@@ -2,6 +2,7 @@ import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import LoadingBar from "./loading/loadingbar";
 import { useDispatch, useSelector } from "react-redux";
 import { SEARCH_KEYWORD, START_LOADING } from "../redux/actions";
@@ -82,6 +83,20 @@ const Base = ({ children }) => {
             <Typography variant="h6" style={{ color: "#fff" }} sm={0}>
               PhotoCollection
             </Typography>
+          </IconButton>
+          
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="github"
+            onClick={() => {
+              window.open(
+                "https://github.com/SamarpanCoder2002/PhotoCollection",
+                "_blank"
+              );
+            }}
+          >
+            <GitHubIcon />
           </IconButton>
 
           <Search>

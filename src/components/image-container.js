@@ -32,6 +32,8 @@ const ImageContainer = () => {
   };
 
   useEffect(() => {
+    error && page>1 && seterror(false);
+
     if (query && query !== "") {
       fetch(
         `https://api.pexels.com/v1/search?query=${query}&per_page=15&page=${page}`,
@@ -62,7 +64,6 @@ const ImageContainer = () => {
           setimages([...images, ...imageCollection]);
           isLoading && stopLoading();
           bottomLoading && setbottomLoading(false);
-          error && seterror(false);
         })
         .then(() => {});
     }
